@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索结果</title>
+</head>
+<body>
+<h1>搜索结果</h1>
+{% if title %}
+    {% for i in title %}
+        <p>书名：{{ i.title }}</p>
+        <p>原价：{{ i.price }}</p>
+        <p>折扣价格：{{ i.retail_price }}</p>
+        <p>{{ i.pub }}</p>
+        <p>作者：{{ i.author }}</p>
+    {% endfor %}
+{% else %}
+    {{ error }}
+{% endif %}
+</body>
+</html>

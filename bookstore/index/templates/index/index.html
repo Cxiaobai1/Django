@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>123</title>
+</head>
+<body>
+<H1> {{ name.a }}</H1>
+<A href="{%   url 'index:test'  %}">点击</A>
+{% for book_name in Books %}
+    <p>{{ book_name.title }}</p>
+{% endfor %}
+</body>
+</html>
