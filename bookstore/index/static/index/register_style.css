@@ -1,0 +1,24 @@
+.register{
+    display:flex
+}
+.register_box{
+    display:block;
+    padding:10px 0 0 350px;
+    width:300px;
+    margin:60px
+
+}
+.register_box label{
+    font-size:15px;
+    margin:0 15px 0 15px
+}
+.register_box input{
+    display:block;
+    margin:10px;
+}
+.register_image{
+    display:block;
+    height:534px;
+    width:800px;
+    margin:10px 0 0 20px
+}

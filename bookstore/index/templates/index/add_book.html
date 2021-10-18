@@ -14,14 +14,16 @@
         price:<input type="text" name="price">
     </p>
     <p id="retail_price">
-        retail_price<input type="text" name="retail_price">
+        retail_price:<input type="text" name="retail_price">
     </p>
     <p id="public">
         public:<input type="text" name="public">
     </p>
     <p id="submit">
         <input type="submit" value="提交">
+
     </p>
 </form>
+<a href="{% url 'index:book_table' %}"> 返回书籍列表</a>
 </body>
 </html>

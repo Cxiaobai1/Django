@@ -1,34 +1,54 @@
-<!DOCTYPE html>
+{% extends 'index/base.html' %}
 <html lang="en">
 <head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'index/login_style.css' %}">
+    {% endblock style %}
     <meta charset="UTF-8">
+    {% block title %}
     <title>Login</title>
+    {% endblock title %}
 </head>
+
 <body>
-<form action="/index/login/" method="post">
-    {% csrf_token %}
-    <p>
-        <label>
-            用户名：
-            <input type="text" name="username" value="{{ username }}">
-        </label>
-        <span>{{ error }}</span>
-    </p>
-    <p id="pwd">
-        <label>
-            密码：
-            <input type="text" name="password" value="{{ password }}">
-        </label>
-    </p>
-    <p>
-        <label>
-            记住用户名:
-            <input type="checkbox" name="isSaved">
-        </label>
-    </p>
-    <p>
-        <input type="submit" value="登录">
-    </p>
-</form>
+{% block nav %}
+{% endblock nav %}
+
+{% block main %}
+<main>
+    <div class="login_box">
+        <div class="login_pictures">
+            <img src="{% static 'index/images/login.jpg' %}">
+        </div>
+        <div class="login_form">
+            <div class="login_form_title">
+                <p>穷究于理</p>
+                <p>成就于工</p>
+            </div>
+            <form action="/index/login/" method="post">
+                {% csrf_token %}
+                <p class="login_name">
+                    <input type="text" name="username" value="{{ username }}" placeholder="邮箱">
+                    <span>{{ error }}</span>
+                </p>
+                <p class="login_pwd">
+                    <input type="password" name="password" value="{{ password }}" placeholder="密码">
+                </p>
+                <p class="login_rem_name">
+                    记住账号<input type="checkbox" name="isSaved">
+                </p>
+                <p class="login_bot">
+                    <input type="submit" value="登录">
+                </p>
+            </form>
+            <p class="register">
+                没有账号？点击<a href="{% url 'index:register' %}">注册</a>
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock main %}
 </body>
 </html>

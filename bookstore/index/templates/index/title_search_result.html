@@ -1,21 +1,31 @@
-<!DOCTYPE html>
+{% extends 'index/base.html' %}
 <html lang="en">
 <head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    {% endblock style %}
     <meta charset="UTF-8">
+    {% block title %}
     <title>搜索结果</title>
+    {% endblock title %}
 </head>
 <body>
-<h1>搜索结果</h1>
-{% if title %}
-    {% for i in title %}
-        <p>书名：{{ i.title }}</p>
-        <p>原价：{{ i.price }}</p>
-        <p>折扣价格：{{ i.retail_price }}</p>
-        <p>{{ i.pub }}</p>
-        <p>作者：{{ i.author }}</p>
+{% block main %}
+<main>
+    <h1>搜索结果</h1>
+    {% if book %}
+    {% for i in book %}
+    <p>书名：{{ i.title }}</p>
+    <p><img src="{{ i.img_ul }}"></p>
+    <p>作者：{{ i.author }}</p>
     {% endfor %}
-{% else %}
+    {% else %}
     {{ error }}
-{% endif %}
+    {% endif %}
+    {{ form }}
+</main>
+{% endblock main %}
+
 </body>
 </html>

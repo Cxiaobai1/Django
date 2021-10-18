@@ -12,6 +12,7 @@ class Pub_name(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=30, verbose_name='姓名')
     email = models.EmailField(verbose_name='邮箱')
+
     # books = models.ManyToManyField(to='BOOk')
 
     def __str__(self):
@@ -31,7 +32,7 @@ class BOOk(models.Model):
 
     def __str__(self):
         # return "title:%s,pub:%s,price:%s" % (self.title, self.pub, self.price)
-        return "%s %s %s %s" % (self.title,self.price,self.retail_price,self.pub)
+        return "%s %s %s %s" % (self.title, self.price, self.retail_price, self.pub)
 
 
 class UserInfo(models.Model):
@@ -46,3 +47,19 @@ class ExtendUserInfo(models.Model):
     user = models.OneToOneField(to=UserInfo, on_delete=models.CASCADE)
     signature = models.CharField(max_length=255, verbose_name='用户签名', help_text='自建签名')
     nickname = models.CharField(max_length=255, verbose_name='昵称', help_text='自建昵称')
+
+
+class MfBook(models.Model):
+    title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
+                             primary_key=True)
+    author = models.CharField(max_length=24, verbose_name='作者', null=True)
+    description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
+    img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)
+
+
+class AllBook(models.Model):
+    title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
+                             primary_key=True)
+    author = models.CharField(max_length=24, verbose_name='作者', null=True)
+    description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
+    img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)

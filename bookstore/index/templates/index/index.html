@@ -1,14 +1,21 @@
-<!DOCTYPE html>
+{% extends 'index/base.html' %}
 <html lang="en">
 <head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'index/index_style.css' %}">
+    {% endblock style %}
     <meta charset="UTF-8">
-    <title>123</title>
+    {% block title %}
+    <title>主页</title>
+    {% endblock title %}
 </head>
 <body>
-<H1> {{ name.a }}</H1>
-<A href="{%   url 'index:test'  %}">点击</A>
-{% for book_name in Books %}
-    <p>{{ book_name.title }}</p>
-{% endfor %}
+{% block main%}
+<main>
+
+</main>
+{% endblock main%}
 </body>
 </html>

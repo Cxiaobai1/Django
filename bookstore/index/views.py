@@ -1,71 +1,15 @@
 import hashlib
-
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
-from django.views import View
-from .models import Author, UserInfo, BOOk, Pub_name
-from django import forms
+from .models import Author, UserInfo, BOOk, Pub_name, MfBook, AllBook
+from .forms import TitleSearch, NameForm, RegisterForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 
-def test_index(request):
-    a = {}
-    a['name'] = {'a': '1', 'b': '2'}
-    return render(request, 'index/index.html', a)
 
-
-def test(request):
-    return render(request, 'index/test.html')
-
-
-def Book_name(request):
-    # Books = BOOk.objects.raw("select * from index_book")
-    BOOKs = BOOk.objects.get(title='Python')
-    return render(request, "index/book_name.html", locals())
-
-
-# FBV
-def login(request):
-    if request.method == 'get':
-        return HttpResponse("登陆成功")
-    elif request.method == 'post':
-        return HttpResponse("0")
-
-
-# CBV
-class LoginView(View):
-    def get(self, request):
-        return HttpResponse("登陆成功")
-
-    def post(self, request):
-        return HttpResponse("0")
-
-
-# 表单系统简单应用
-class Loginforms(forms.Form):
-    user_name = forms.CharField(label='用户名', min_length=6, max_length=12)
-    user_password = forms.CharField(label='密码', min_length=8)
-
-
-def logins(request):
-    if request.method == "post":
-        form = Loginforms(request.POST)
-        if form.is_valid():
-            return HttpResponse("登陆成功")
-    else:
-        form = Loginforms()
-    return render(request, "index/login.html", locals())
-
-
-def set_cookie_view(request):
-    resp = HttpResponse()
-    resp.set_cookie('username', 'wuchangyu', 3600)
-    return resp
-
-
-def get_cookie_view(request):
-    value = request.COOKIES.get('username')
-    return HttpResponse('--MY COOKIE is--%s' % value)
+def index(request):
+    return render(request, 'index/index.html')
 
 
 def login_view(request):
@@ -154,7 +98,7 @@ def title_search(request):
 
 def title_search_result(request):
     title = BOOk.objects.filter(title__icontains=request.GET['title'])
-    print(title)
+    # print(title)
     if not title:
         error = "没有找到"
     return render(request, 'index/title_search_result.html', locals())
@@ -201,4 +145,91 @@ def add_book(request):
 
 
 def delete_book(request):
+    if request.method == 'GET':
+        return render(request, 'index/delete_book.html')
+    elif request.method == 'POST':
+        title = request.POST.get('title')
+
+        title_search = BOOk.objects.filter(title=title)
+        # print(title_search)
+        if not title_search:
+            error = '该书籍不存在'
+            return render(request, 'index/delete_book.html', locals())
+
+        else:
+            title_search.delete()
+            return HttpResponseRedirect('/index/book_table')
+    else:
+        return HttpResponse('请使用正确的HTTP请求方式！')
+    pass
+
+
+def search_title_form(request):
+    return render(request, 'index/title_search.html', context={'form': TitleSearch})
+
+
+def search_title(request):
+    form = TitleSearch(request.GET)
+    if form.is_valid():
+        books = BOOk.objects.filter(title__icontains=form.cleaned_data['title'])
+        if not books:
+            return HttpResponse('没有此书籍')
+        return render(request, 'index/title_search_result', locals())
+    else:
+        return render(request, 'index/title_search.html', {'form': form})
+
+
+def cx(request):
+    return render(request, 'index/畅销榜.html')
+
+
+def dy(request):
+    return render(request, 'index/订阅榜.html')
+
+
+def dj(request):
+    return render(request, 'index/点击榜.html')
+
+
+def mf(request):
+    mf_books = MfBook.objects.all()
+    paginator = Paginator(mf_books, 20)
+    num_p = request.GET.get('page', 1)
+    page = paginator.page(int(num_p))
+    # print(page)
+    return render(request, 'index/免费榜.html', locals())
+
+
+def xs(request):
+    return render(request, 'index/新书榜.html')
+
+
+def get_name(request):
+    if request.method == "POST":
+        form = NameForm(request.POST)
+
+        if form.is_valid():
+            your_name = form.cleaned_data['your_name']
+            return HttpResponse('your_name:%s' % your_name)
+    else:
+        form = NameForm()
+    return render(request, 'index/name.html', {'form': form})
+    pass
+
+
+def click_title(request):
+    if request.method == 'GET':
+        book = AllBook.objects.all()
+    pass
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            return HttpResponse('你好')
+    else:
+        form = RegisterForm()
+    return render(request, 'index/register.html', locals())
     pass

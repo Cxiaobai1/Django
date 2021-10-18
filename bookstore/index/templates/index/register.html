@@ -1,25 +1,31 @@
-<!DOCTYPE html>
+{% extends 'index/base.html' %}
 <html lang="en">
 <head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/register_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    <link rel="icon" href="{% static 'index/images/学校.ico' %}">
+    {% endblock style %}
     <meta charset="UTF-8">
+    {% block title %}
     <title>注册</title>
+    {% endblock title %}
 </head>
 <body>
-<form action="/index/register/" method="post">
-    {% csrf_token %}
-    <p>
-        用户名<input type="text" name="username" value="{{  username }}">
-        <span>{{ username_error }}</span>
-    </p>
-    <p>
-        密码<input type="password" name="password" value="{{ password }}">
-        <span>{{ password_error }}</span>
-    </p>
-    <p>
-        再次输入密码<input type="password" name="password_again" value="{{ password_again }}">
-        <span>{{ password_again_error }}</span>
-    </p>
-    <input type="submit" value="注册">
-</form>
+{% block nav %}
+{% endblock nav %}
+{% block main %}
+<div class="register">
+    <div class="register_image">
+        <img src="{% static 'index/images/学校8.jpg' %}">
+    </div>
+    <form method="post" class="register_box">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="注册">
+    </form>
+</div>
+{% endblock main %}
 </body>
 </html>
