@@ -16,7 +16,12 @@ class NameForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
-    name = forms.CharField(max_length=12, min_length=1, label='昵称')
+    username = forms.CharField(max_length=12, min_length=1, label='昵称')
     email = forms.CharField(widget=forms.EmailInput, label='邮箱')
     password = forms.CharField(widget=forms.PasswordInput, label='密码')
     password_again = forms.CharField(widget=forms.PasswordInput, label='再次输入密码')
+
+
+class LoginForm(forms.Form):
+    email = forms.CharField(widget=forms.EmailInput,label='邮箱')
+    password = forms.CharField(widget=forms.PasswordInput, label='密码')

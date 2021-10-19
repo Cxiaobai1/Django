@@ -36,23 +36,55 @@ class BOOk(models.Model):
 
 
 class UserInfo(models.Model):
-    username = models.CharField(max_length=24, verbose_name='用户注册')
+    email = models.EmailField(max_length=24, verbose_name='用户邮箱', default=1)
+    username = models.CharField(max_length=24, verbose_name='用户昵称')
     password = models.CharField(max_length=100, verbose_name='密码')
 
     def __str__(self):
         return "%s" % (self.username)
 
 
-class ExtendUserInfo(models.Model):
-    user = models.OneToOneField(to=UserInfo, on_delete=models.CASCADE)
-    signature = models.CharField(max_length=255, verbose_name='用户签名', help_text='自建签名')
-    nickname = models.CharField(max_length=255, verbose_name='昵称', help_text='自建昵称')
-
-
 class MfBook(models.Model):
+    num = models.IntegerField(verbose_name='排名', null=True)
     title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
                              primary_key=True)
-    author = models.CharField(max_length=24, verbose_name='作者', null=True)
+    author = models.CharField(max_length=255, verbose_name='作者', null=True)
+    description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
+    img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)
+
+
+class CxBook(models.Model):
+    num = models.IntegerField(verbose_name='排名', null=True)
+    title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
+                             primary_key=True)
+    author = models.CharField(max_length=255, verbose_name='作者', null=True)
+    description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
+    img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)
+
+
+class DyBook(models.Model):
+    num = models.IntegerField(verbose_name='排名', null=True)
+    title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
+                             primary_key=True)
+    author = models.CharField(max_length=255, verbose_name='作者', null=True)
+    description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
+    img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)
+
+
+class DjBook(models.Model):
+    num = models.IntegerField(verbose_name='排名', null=True)
+    title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
+                             primary_key=True)
+    author = models.CharField(max_length=255, verbose_name='作者', null=True)
+    description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
+    img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)
+
+
+class XsBook(models.Model):
+    num = models.IntegerField(verbose_name='排名', null=True)
+    title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
+                             primary_key=True)
+    author = models.CharField(max_length=255, verbose_name='作者', null=True)
     description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
     img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)
 
@@ -60,6 +92,6 @@ class MfBook(models.Model):
 class AllBook(models.Model):
     title = models.CharField(max_length=255, verbose_name='书籍名称', unique=True, db_index=True,
                              primary_key=True)
-    author = models.CharField(max_length=24, verbose_name='作者', null=True)
+    author = models.CharField(max_length=255, verbose_name='作者', null=True)
     description = models.CharField(max_length=255, verbose_name='简介', default='无描述', null=True)
     img_ul = models.CharField(max_length=255, verbose_name='图片路径', default='无路径', null=True)

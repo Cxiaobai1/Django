@@ -8,8 +8,8 @@ from .models import Author, UserInfo,AllBook
 
 @admin.register(AllBook)
 class AllBookAdmin(admin.ModelAdmin):
-    search_fields = ['title']
-    list_display = ['title']
+    search_fields = ['title','author']
+    list_display = ['title','author']
 
 
 @admin.register(Author)

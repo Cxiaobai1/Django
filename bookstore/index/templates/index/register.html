@@ -23,6 +23,8 @@
     <form method="post" class="register_box">
         {% csrf_token %}
         {{ form }}
+        {{ password_again_error }}
+        {{ username_error }}
         <input type="submit" value="注册">
     </form>
 </div>

@@ -1,7 +1,7 @@
 import hashlib
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from .models import Author, UserInfo, BOOk, Pub_name, MfBook, AllBook
-from .forms import TitleSearch, NameForm, RegisterForm
+from .forms import TitleSearch, NameForm, RegisterForm, LoginForm
 from django.core.paginator import Paginator
 
 
@@ -15,31 +15,33 @@ def index(request):
 def login_view(request):
     if request.method == "GET":
         if 'username' in request.session:
-            return HttpResponseRedirect('/index/test')
+            return render(request, 'index/index.html')
         if 'username' in request.COOKIES:
             request.session['usename'] = request.COOKIES['username']
-            return HttpResponseRedirect('/index/test')
-        return render(request, 'index/login.html')
+            return render(request, 'index/index.html')
+        form = LoginForm()
     elif request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        m = hashlib.md5()
-        m.update(password.encode('utf-8'))
-        password_m = m.hexdigest()
-        print(password_m)
-        if not username or not password:
-            error = '你输入的用户名或密码错误！'
-            return render(request, 'index/login.html', locals())
-        users = UserInfo.objects.filter(username=username, password=password)  # 密码未使用哈希加密
-        if not users:
-            error = '用户不存在或密码错误'
-            return render(request, 'index/login.html', locals())
-        users = users[0]
-        request.session['username'] = username
-        response = HttpResponseRedirect('/index/test')
-        if 'isSaved' in request.POST.keys():
-            response.set_cookie('username', username, 60 * 60 * 24 * 7)
-        return response
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            # print(email)
+            m = hashlib.md5()
+            m.update(password.encode('utf-8'))
+            password_m = m.hexdigest()
+            # print(password_m)
+            users = UserInfo.objects.filter(email=email, password=password_m)  # 密码未使用哈希加密
+            # print(users)
+            if not users:
+                error = '用户不存在或密码错误'
+                return render(request, 'index/login.html', locals())
+            users = users[0]
+            request.session['username'] = email
+            response = HttpResponseRedirect('/index')
+            if 'isSaved' in request.POST.keys():
+                response.set_cookie('email', email, 60 * 60 * 24 * 7)
+            return render(request, 'index/index.html', locals())
+    return render(request, 'index/login.html', locals())
 
 
 def logout_view(request):
@@ -53,40 +55,40 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == 'GET':
-        return render(request, 'index/register.html')
+        form = RegisterForm()
     elif request.method == 'POST':
-        username = request.POST.get('username')
-        if not username:
-            username_error = '请输入正确的用户名'
-            return render(request, 'index/register.html', locals())
-        password = request.POST.get('password')
-        md = hashlib.md5()
-        md.update(password.encode('utf-8'))
-        password_md = md.hexdigest()
-        password_again = request.POST.get('password_again')
-        md = hashlib.md5()
-        md.update(password_again.encode('utf-8'))
-        password_again_md = md.hexdigest()
-        if not password_md or not password_again_md:
-            password_error = "请输入正确的密码"
-            return render(request, 'index/register.html', locals())
-        if password_md != password_again_md:
-            password_again_error = "请输入一致的密码"
-            return render(request, 'index/register.html', locals())
-        try:
-            UserInfo.objects.get(username=username)
-            username_error = "该用户名已被注册"
-            return render(request, 'index/register.html', locals())
-        except Exception as e:
-            print("%s 是可用的用户名-%s" % (username, e))
-            try:
-                UserInfo.objects.create(username=username, password=password_again_md)
-                request.session['username'] = username
-                return render(request, 'index/test.html')
-            except Exception as e:
-                print(e)
-                username_error = '该用户名已被占用'
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            password_again = form.cleaned_data['password_again']
+            username = form.cleaned_data['username']
+
+            md = hashlib.md5()
+            md.update(password.encode('utf-8'))
+            password_md = md.hexdigest()
+            md = hashlib.md5()
+            md.update(password_again.encode('utf-8'))
+            password_again_md = md.hexdigest()
+            if password_md != password_again_md:
+                password_again_error = "请输入一致的密码"
                 return render(request, 'index/register.html', locals())
+            print(email)
+            try:
+                UserInfo.objects.get(email=email)
+                username_error = "该邮箱已被注册"
+                return render(request, 'index/register.html', locals())
+            except Exception as e:
+                print("%s 是可用的邮箱-%s" % (email, e))
+                try:
+                    UserInfo.objects.create(username=username, email=email, password=password_again_md)
+                    request.session['email'] = email
+                    return render(request, 'index/index.html')
+                except Exception as e:
+                    print(e)
+                    username_error = '注册失败'
+                    return render(request, 'index/register.html', locals())
+    return render(request, 'index/register.html', locals())
 
 
 def title_search(request):
