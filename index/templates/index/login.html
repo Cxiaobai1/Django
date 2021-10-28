@@ -1,0 +1,47 @@
+{% extends 'index/base.html' %}
+<html lang="en">
+<head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'index/login_style.css' %}">
+    {% endblock style %}
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Login</title>
+    {% endblock title %}
+</head>
+
+<body>
+{% block main %}
+<main>
+    <div class="login_box">
+        <div class="login_pictures" style="">
+
+        </div>
+        <div class="login_form">
+            <form action="/index/login/" method="post">
+                {% csrf_token %}
+                <p class="login_name">
+                    <input type="text" name="username" value="{{ username }}">
+                    <span>{{ error }}</span>
+                </p>
+                <p class="login_pwd">
+                    <input type="password" name="password" value="{{ password }}">
+                </p>
+                <p class="login_rem_name">
+                    记住账号<input type="checkbox" name="isSaved">
+                </p>
+                <p class="login">
+                    <input type="submit" value="登录">
+                </p>
+            </form>
+            <p class="register">
+                没有账号？点击<a href="{% url 'index:register' %}">注册</a>
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock main %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+
+div.login_box{
+    width:300px;
+    height:200px;
+    display:block
+}
+div.login_form{
+    float:right;
+    width:200px;
+    height:200px;
+    display: block;
+    border:1px solid #a0b1c4;
+}
+div.login_box p{
+    color:black;
+}

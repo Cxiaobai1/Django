@@ -1,0 +1,21 @@
+{% extends 'index/base.html' %}
+<html lang="en">
+<head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'index/index_style.css' %}">
+    {% endblock style %}
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>主页</title>
+    {% endblock title %}
+</head>
+<body>
+{% block main%}
+<main>
+
+</main>
+{% endblock main%}
+</body>
+</html>

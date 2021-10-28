@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除书籍</title>
+</head>
+<body>
+<form action="/index/delete_book/" method="post">
+    {% csrf_token %}
+    <p>
+        书籍名称：<input type="text" name="title">
+        {{ error }}
+    </p>
+    <p>
+        <input type="submit" value="提交">
+        <a href="{% url 'index:book_table' %}"> 返回书籍列表</a>
+    </p>
+</form>
+</body>
+</html>

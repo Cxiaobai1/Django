@@ -1,0 +1,32 @@
+{% extends 'index/base.html' %}
+<html lang="en">
+<head>
+    {% block style %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    {% endblock style %}
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>搜索结果</title>
+    {% endblock title %}
+</head>
+<body>
+{% block main %}
+    <main>
+        <h1>搜索结果</h1>
+        {% if title %}
+            {% for i in title %}
+                <p style="font-size: 20px">书名：{{ i.title }}</p>
+                <img src="{{ i.img_ul }}" alt="">
+                <p>{{ i.description }}</p>
+                <p>作者：{{ i.author }}</p>
+            {% endfor %}
+        {% else %}
+            {{ error }}
+        {% endif %}
+        {{ form }}
+    </main>
+{% endblock main %}
+
+</body>
+</html>

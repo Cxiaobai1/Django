@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索</title>
+</head>
+<body>
+<form action="/index/title_search_result" method="get">
+    <p>
+        {{ form }}
+        <input type="text" name="title" placeholder="书名">
+        <input type="submit" value="search_title">
+    </p>
+</form>
+{% if error %}
+    {{ error.0 }}
+{% endif %}
+</body>
+</html>

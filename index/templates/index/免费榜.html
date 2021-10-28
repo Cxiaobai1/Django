@@ -1,0 +1,49 @@
+{% extends 'index/base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>免费榜</title>
+    {% endblock title %}
+</head>
+<body>
+{% block main %}
+    <main>
+        <div class="book_body">
+            <div class="book_box_all" style="margin-left:350px;margin-right:350px">
+                {% for p in page %}
+                    <div class="book_box"
+                         style="display:block;margin:15px;border:1px solid black;width:200px;float:left;height:330px">
+                        <h2 style="display:block;padding:5px;text-align: center">
+                            <a href="{% url 'index:description' %}"
+                               style="text-decoration: none;color: black;">{{ p.title }}</a>
+                        </h2>
+                        <img src="{{ p.img_ul }} " style="padding-left:36px">
+                        <p style="padding-left:50px">{{ p.author }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="fy" style="display:block;float:left;margin-left:850px; margin-top: 10px;margin-bottom: 10px;font-size:15px ">
+                {% if page.has_previous %}
+                    <a href="/index/mf?page={{ page.previous_page_number }}">上一页</a>
+                {% else %}
+                    上一页
+                {% endif %}
+                {% for p in paginator.page_range %}
+                    {% if p == page.number %}
+                        {{ p }}
+                    {% else %}
+                        <a href="/index/mf?page={{ p }}">{{ p }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page.has_next %}
+                    <a href="/index/mf?page={{ page.next_page_number }}">下一页</a>
+                {% else %}
+                    下一页
+                {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock main %}
+</body>
+</html>

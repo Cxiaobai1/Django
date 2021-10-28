@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/base_style.css' %}">
+    {% endblock style %}
+
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Title</title>
+    {% endblock title %}
+</head>
+<body>
+{% block header %}
+<header>
+    <div class="header_box">
+        <div class="header_edu">
+            <p><a href="http://www.cdutetc.cn/" target="_blank">成理工程</a></p>
+        </div>
+        <div class="header_name">
+            <p>半亩书店</p>
+        </div>
+        <div class="login_url">
+            <h3>
+                <a href="{% url 'index:login' %}">Login</a>
+            </h3>
+        </div>
+        <div class="search">
+            <form action="/index/title_search_result" method="get">
+                <input type="text" name="title" placeholder="书名">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+
+{% block nav %}
+<nav>
+    <div class="nav_list">
+        <ul>
+            <li>
+                <a href="{% url 'index:index' %}">主页</a>
+            </li>
+            <li>
+                <a href="{% url 'index:cx' %} ">畅销榜</a>
+            </li>
+            <li>
+                <a href="{% url 'index:dy' %} ">订阅榜</a>
+            </li>
+            <li>
+                <a href="{% url 'index:dj' %} ">点击榜</a>
+            </li>
+            <li>
+                <a href="{% url 'index:mf' %} ">免费榜</a>
+            </li>
+            <li>
+                <a href="{% url 'index:xs' %} ">新书榜</a>
+            </li>
+        </ul>
+    </div>
+    <hr>
+</nav>
+{% endblock nav %}
+
+{% block main %}
+<main>
+
+</main>
+{% endblock main %}
+
+{% block footer %}
+<footer style="float:left">
+    <hr>
+    <div class="desc">
+        <p style="font-size:1rem"><strong>Powered by Django</strong></p>
+        <p>The web framework for perfectionists with deadlines</p>
+    </div>
+    <div class="image">
+        <ul>
+            <li><img src="{% static 'index/images/学校1.jpg' %}" width="380" height="200" title="成理工程"></li>
+            <li><img src="{% static 'index/images/学校2.jpg' %}" width="380" height="200" title="成理工程"></li>
+            <li><img src="{% static 'index/images/学校3.jpg' %}" width="380" height="200" title="成理工程"></li>
+            <li><img src="{% static 'index/images/学校4.jpg' %}" width="380" height="200" title="成理工程"></li>
+            <li><img src="{% static 'index/images/学校5.jpg' %}" width="380" height="200" title="成理工程"></li>
+        </ul>
+    </div>
+    <hr>
+</footer>
+{% endblock footer %}
+</body>
+</html>

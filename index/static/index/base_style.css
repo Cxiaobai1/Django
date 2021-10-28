@@ -1,0 +1,66 @@
+body{
+    font:12px "lucida Grande",Verdana,"Microsoft YaHei"
+}
+.header_box{
+    background-color: #0C4B33;
+    color: white;   
+    padding: 10px 0 6px;
+   position: relative;
+   overflow: hidden;
+}
+.header_name p{
+    left: 50%;
+    text-align: center;
+    font-size: 2rem;
+}
+.header_edu a{
+    text-align: left;
+    font-size: 1rem;
+    padding: 10px;
+}
+.search form{
+    text-align: center;
+}
+
+.header_box a{
+    text-decoration: none;
+    float: right;
+    display: block;
+    padding: 14px 20px;
+    text-align: center;
+    color: white;
+}
+nav{
+    border-bottom :1em olivedrab;
+}
+
+.nav_list{
+    overflow: hidden;
+}
+.nav_list ul{
+    display: flex;
+    list-style: none;
+    padding: 10px 200px;
+}
+.nav_list a{
+    display: block;
+    padding: 20px 0 20px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    padding: 10px 100px;
+    font-size: 1rem;
+}
+.nav_list a:hover{
+color:blue;
+background-color:red;
+}
+.image ul{
+    display: flex;
+    list-style: none;
+    padding: 10px 0 10px 0;
+    
+}
+.image li{
+    float: left;
+}
