@@ -232,6 +232,7 @@ class TestView(View):
 
     def post(self):
         return HttpResponse('post')
+        pass
 
     def put(self):
         pass
