@@ -4,6 +4,7 @@ from .models import Author, UserInfo, BOOk, Pub_name, MfBook, AllBook
 from .forms import TitleSearch, NameForm
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
+from django.views import View
 
 
 # Create your views here.
@@ -224,12 +225,14 @@ def click_title(request):
     pass
 
 
-class TestView(APIView):
+class TestView(View):
+
     def get(self, request):
-        self.dispatch
+        return HttpResponse('get')
         pass
 
     def post(self):
+        return HttpResponse('post')
         pass
 
     def put(self):
